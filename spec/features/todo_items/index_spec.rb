@@ -1,13 +1,11 @@
 require 'spec_helper'
-RSpec.configure do |c|
-  c.expose_current_running_example_as :example
-end
 
 describe "Viewing todo items" do
   let!(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery list.") }
 
   it "displays the title of the todo list" do
-    visit_todo_list(todo_list)
+#    visit_todo_list(todo_list)
+    visit "/todo_lists/#{todo_list.id}/todo_items"
     within("h1#title") do
       expect(page).to have_content(todo_list.title)
     end
