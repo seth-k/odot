@@ -1,11 +1,9 @@
 require 'spec_helper'
-RSpec.configure do |c|
-  c.expose_current_running_example_as :example
-end
 
 describe "Editing todo lists" do
   let!(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery list.") }
-  
+  let(:user) {create(:user)}
+
   def update_todo_list(options={})
     options[:title] ||= "My todo list"
     options[:description] ||= "This is my todo list"
@@ -20,7 +18,11 @@ describe "Editing todo lists" do
     fill_in "Description", with: options[:description] 
     click_button "Update Todo list"
   end
-
+  
+  before do
+    sign_in user, password: "treehouse1"
+  end
+  
   it "updates a todo list successfully with correct information" do
     update_todo_list todo_list: todo_list, title: "New title", description: "New description"
     
