@@ -1,12 +1,14 @@
 require 'spec_helper'
-RSpec.configure do |c|
-  c.expose_current_running_example_as :example
-end
 
 describe "Editing todo items" do
   let!(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery list.") }
   let!(:todo_item) { todo_list.todo_items.create(content: "Milk") }
- 
+  let(:user) {create(:user)}
+
+  before do
+    sign_in user, password: "treehouse1"
+  end
+   
   it "successful when marking a single item compete" do
     expect(todo_item.completed_at).to be_nil
     visit_todo_list todo_list
