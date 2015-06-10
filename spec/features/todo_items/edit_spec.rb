@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe "Editing todo items" do
-  let!(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery list.") }
+  let!(:todo_list) { create(:todo_list) }
+  let(:user) {todo_list.user}
   let!(:todo_item) { todo_list.todo_items.create(content: "Milk") }
-  let(:user) {create(:user)}
 
   before do
     sign_in user, password: "treehouse1"
