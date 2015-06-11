@@ -63,4 +63,18 @@ describe User do
     end
   end
   
+  require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+  
+  describe "#generate_password_reset_token!" do
+    let(:user) { create(:user) }
+    it "changes the password reset token attribute" do
+      expect{ user.generate_password_reset_token! }.to change{ user.password_reset_token }
+    end
+    
+    it "calls SecureRandom.urlsafe_base64 to generate the password_reset_token" do
+      expect(SecureRandom).to receive(:urlsafe_base64)
+      user.generate_password_reset_token!
+    end
+  end
+  
 end
